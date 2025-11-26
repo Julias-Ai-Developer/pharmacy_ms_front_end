@@ -1,0 +1,18 @@
+# Ignore the extraction script (no longer needed)
+extract_modules.ps1
+
+# Common PHP/Web ignores
+*.log
+*.cache
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.sublime-*
+
+# Temporary files
+*.tmp
+*.temp
+~*

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pharmacy MS - Prescriptions</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <script>(function () { const savedTheme = localStorage.getItem('theme') || 'light'; document.documentElement.setAttribute('data-theme', savedTheme); })();</script>
+</head>
+
+<body>
+    <header class="header-glass">
+        <div class="container-fluid">
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="d-flex align-items-center gap-3"><button class="btn btn-link text-decoration-none p-0"
+                        style="color: var(--text-primary);" onclick="toggleSidebar()"><i class="bi bi-list"
+                            style="font-size: 24px;"></i></button>
+                    <div>
+                        <h5 class="mb-0" style="color: var(--primary); font-weight: 700;">HealthPlus Pharmacy</h5><small
+                            class="text-muted d-flex align-items-center gap-1"><i class="bi bi-geo-alt"></i>Kampala
+                            Central, Uganda</small>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center gap-3"><button class="btn btn-link text-decoration-none p-0"
+                        style="color: var(--text-primary);" onclick="toggleTheme()"><i class="bi bi-moon-fill"
+                            id="themeIcon" style="font-size: 20px;"></i></button><button
+                        class="btn btn-link text-decoration-none p-0 position-relative"
+                        style="color: var(--text-primary);"><i class="bi bi-bell-fill"
+                            style="font-size: 20px;"></i><span class="notification-badge">3</span></button>
+                    <div class="position-relative">
+                        <div class="avatar" onclick="toggleProfileDropdown()">JD</div>
+                        <div class="dropdown-glass position-absolute end-0 mt-2" id="profileDropdown"
+                            style="display: none; min-width: 200px; z-index: 1001;">
+                            <div class="dropdown-item-glass"><i class="bi bi-person"></i><span>My Profile</span></div>
+                            <div class="dropdown-item-glass"><i class="bi bi-gear"></i><span>Settings</span></div>
+                            <hr class="my-2" style="border-color: var(--border-color);"><a href="login.html"
+                                class="dropdown-item-glass text-danger" style="text-decoration:none;"><i
+                                    class="bi bi-box-arrow-right"></i><span>Logout</span></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <aside class="sidebar" id="sidebar">
+        <nav><a href="index.html" class="sidebar-item"><i class="bi bi-house-door-fill"></i><span>Dashboard</span></a><a
+                href="pos.html" class="sidebar-item"><i class="bi bi-cart-fill"></i><span>POS / Sales</span></a><a
+                href="receipt.html" class="sidebar-item"><i class="bi bi-receipt"></i><span>Receipts</span></a><a
+                href="inventory.html" class="sidebar-item"><i
+                    class="bi bi-box-seam-fill"></i><span>Inventory</span></a><a href="selling-units.html"
+                class="sidebar-item"><i class="bi bi-tags-fill"></i><span>Selling Units</span></a><a
+                href="purchases.html" class="sidebar-item"><i class="bi bi-bag-fill"></i><span>Purchases</span></a><a
+                href="prescriptions.html" class="sidebar-item active"><i
+                    class="bi bi-file-earmark-medical-fill"></i><span>Prescriptions</span></a><a href="patients.html"
+                class="sidebar-item"><i class="bi bi-people-fill"></i><span>Patients</span></a><a href="clinic.html"
+                class="sidebar-item"><i class="bi bi-hospital-fill"></i><span>Clinic</span></a><a href="reports.html"
+                class="sidebar-item"><i class="bi bi-graph-up"></i><span>Reports</span></a><a href="users.html"
+                class="sidebar-item"><i class="bi bi-person-badge-fill"></i><span>Users & Roles</span></a><a
+                href="settings.html" class="sidebar-item"><i class="bi bi-gear-fill"></i><span>Settings</span></a></nav>
+    </aside>
+    <main class="main-content" id="mainContent">
+        <div class="module-content fade-in">
+            <h2 class="mb-4" style="color: var(--primary); font-weight: 700;">Prescriptions</h2>
+            <div class="glass-card">
+                <div class="text-center py-5"><i class="bi bi-file-earmark-medical-fill"
+                        style="font-size: 64px; color: var(--primary); opacity: 0.3;"></i>
+                    <h4 class="mt-4 mb-2">Prescriptions Module</h4>
+                    <p class="text-muted">Manage patient prescriptions</p>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer class="footer-glass text-center">
+        <div class="container">
+            <div class="row">
+                <div class="col-6 mb-3">
+                    <p class="mb-2" style="color: var(--text-secondary);">© 2025 HealthPlus Pharmacy Management System
+                    </p>
+                </div>
+                <div class="col-6">
+                    <div class="d-flex justify-content-center gap-4 flex-wrap"><a href="#" class="text-decoration-none"
+                            style="color: var(--primary); font-weight: 500;"><i class="bi bi-globe me-1"></i>View
+                            Website</a><a href="#" class="text-decoration-none"
+                            style="color: var(--primary); font-weight: 500;"><i class="bi bi-hospital me-1"></i>Clinic
+                            Section</a><a href="#" class="text-decoration-none"
+                            style="color: var(--primary); font-weight: 500;"><i class="bi bi-headset me-1"></i>Contact
+                            Support</a></div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="./assets/js/main.js"></script>
+</body>
+
+</html>

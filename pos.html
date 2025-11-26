@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pharmacy Management System - POS</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="./assets/css/style.css">
+
+    <!-- Theme initialization -->
+    <script>
+        (function () {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        })();
+    </script>
+</head>
+
+<body>
+
+    <!-- ==================== Header ==================== -->
+    <header class="header-glass">
+        <div class="container-fluid">
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="d-flex align-items-center gap-3">
+                    <button class="btn btn-link text-decoration-none p-0" style="color: var(--text-primary);"
+                        onclick="toggleSidebar()">
+                        <i class="bi bi-list" style="font-size: 24px;"></i>
+                    </button>
+                    <div>
+                        <h5 class="mb-0" style="color: var(--primary); font-weight: 700;">HealthPlus Pharmacy</h5>
+                        <small class="text-muted d-flex align-items-center gap-1">
+                            <i class="bi bi-geo-alt"></i>
+                            Kampala Central, Uganda
+                        </small>
+                    </div>
+                </div>
+
+                <div class="d-flex align-items-center gap-3">
+                    <button class="btn btn-link text-decoration-none p-0" style="color: var(--text-primary);"
+                        onclick="toggleTheme()">
+                        <i class="bi bi-moon-fill" id="themeIcon" style="font-size: 20px;"></i>
+                    </button>
+
+                    <button class="btn btn-link text-decoration-none p-0 position-relative"
+                        style="color: var(--text-primary);">
+                        <i class="bi bi-bell-fill" style="font-size: 20px;"></i>
+                        <span class="notification-badge">3</span>
+                    </button>
+
+                    <div class="position-relative">
+                        <div class="avatar" onclick="toggleProfileDropdown()">JD</div>
+                        <div class="dropdown-glass position-absolute end-0 mt-2" id="profileDropdown"
+                            style="display: none; min-width: 200px; z-index: 1001;">
+                            <div class="dropdown-item-glass">
+                                <i class="bi bi-person"></i>
+                                <span>My Profile</span>
+                            </div>
+                            <div class="dropdown-item-glass">
+                                <i class="bi bi-gear"></i>
+                                <span>Settings</span>
+                            </div>
+                            <hr class="my-2" style="border-color: var(--border-color);">
+                            <a href="login.html" class="dropdown-item-glass text-danger" style="text-decoration:none;">
+                                <i class="bi bi-box-arrow-right"></i>
+                                <span>Logout</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- ==================== Sidebar ==================== -->
+    <aside class="sidebar" id="sidebar">
+        <nav>
+            <a href="index.html" class="sidebar-item">
+                <i class="bi bi-house-door-fill"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="pos.html" class="sidebar-item active">
+                <i class="bi bi-cart-fill"></i>
+                <span>POS / Sales</span>
+            </a>
+            <a href="receipt.html" class="sidebar-item">
+                <i class="bi bi-receipt"></i>
+                <span>Receipts</span>
+            </a>
+            <a href="inventory.html" class="sidebar-item">
+                <i class="bi bi-box-seam-fill"></i>
+                <span>Inventory</span>
+            </a>
+            <a href="selling-units.html" class="sidebar-item">
+                <i class="bi bi-tags-fill"></i>
+                <span>Selling Units</span>
+            </a>
+            <a href="purchases.html" class="sidebar-item">
+                <i class="bi bi-bag-fill"></i>
+                <span>Purchases</span>
+            </a>
+            <a href="prescriptions.html" class="sidebar-item">
+                <i class="bi bi-file-earmark-medical-fill"></i>
+                <span>Prescriptions</span>
+            </a>
+            <a href="patients.html" class="sidebar-item">
+                <i class="bi bi-people-fill"></i>
+                <span>Patients</span>
+            </a>
+            <a href="clinic.html" class="sidebar-item">
+                <i class="bi bi-hospital-fill"></i>
+                <span>Clinic</span>
+            </a>
+            <a href="reports.html" class="sidebar-item">
+                <i class="bi bi-graph-up"></i>
+                <span>Reports</span>
+            </a>
+            <a href="users.html" class="sidebar-item">
+                <i class="bi bi-person-badge-fill"></i>
+                <span>Users & Roles</span>
+            </a>
+            <a href="settings.html" class="sidebar-item">
+                <i class="bi bi-gear-fill"></i>
+                <span>Settings</span>
+            </a>
+        </nav>
+    </aside>
+
+    <!-- ==================== Main Content ==================== -->
+    <main class="main-content" id="mainContent">
+
+        <div class="module-content fade-in" id="pos">
+            <h2 class="mb-4" style="color: var(--primary); font-weight: 700;">Point of Sale</h2>
+
+            <div class="row">
+                <!-- Product Selection Area -->
+                <div class="col-lg-8 mb-4">
+                    <!-- Search Bar -->
+                    <div class="glass-card mb-4">
+                        <div class="input-group">
+                            <input type="text" id="posSearchInput" class="form-control form-control-glass"
+                                placeholder="Search products by name, code, or barcode..."
+                                oninput="searchProducts(this.value)">
+                            <button class="btn btn-primary-custom">
+                                <i class="bi bi-search"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Product Grid -->
+                    <div class="glass-card">
+                        <h5 class="mb-4" style="font-weight: 600;">Available Products</h5>
+                        <div class="row g-3" id="productGrid">
+                            <!-- Products will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Shopping Cart -->
+                <div class="col-lg-4 mb-4">
+                    <div class="glass-card sticky-top" style="top: 100px;">
+                        <h5 class="mb-4" style="font-weight: 600;">Shopping Cart</h5>
+
+                        <!-- Cart Items -->
+                        <div id="cartItems" class="mb-4"></div>
+
+                        <hr style="border-color: var(--border-color);">
+
+                        <!-- Discount -->
+                        <div class="mb-3">
+                            <label class="form-label" style="font-weight: 600;">Discount (%)</label>
+                            <input id="discountInput" type="number" class="form-control form-control-glass"
+                                placeholder="0" value="0" oninput="updateCart()">
+                        </div>
+
+                        <!-- Payment Method -->
+                        <div class="mb-3">
+                            <label class="form-label" style="font-weight: 600;">Payment Method</label>
+                            <select id="paymentMethod" class="form-control form-control-glass">
+                                <option>Cash</option>
+                                <option>Mobile Money</option>
+                                <option>Card</option>
+                                <option>Bank Transfer</option>
+                            </select>
+                        </div>
+
+                        <hr style="border-color: var(--border-color);">
+
+                        <!-- Totals -->
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Subtotal:</span>
+                            <strong id="subtotalAmount">UGX 0</strong>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Discount:</span>
+                            <strong id="discountAmount">UGX 0</strong>
+                        </div>
+                        <div class="d-flex justify-content-between mb-4">
+                            <span style="font-size: 18px; font-weight: 700;">Total:</span>
+                            <strong id="totalAmount" style="font-size: 24px; color: var(--primary);">UGX 0</strong>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <button class="btn btn-primary-custom w-100 mb-2" onclick="checkout()">
+                            <i class="bi bi-check-circle me-2"></i>
+                            Complete Sale
+                        </button>
+                        <button class="btn btn-outline-secondary w-100" style="border-radius: 12px;"
+                            onclick="clearCart()">
+                            <i class="bi bi-trash me-2"></i>
+                            Clear Cart
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="footer-glass text-center">
+        <div class="container">
+            <div class="row">
+                <div class="col-6 mb-3">
+                    <p class="mb-2" style="color: var(--text-secondary);">© 2025 HealthPlus Pharmacy Management System
+                    </p>
+                </div>
+                <div class="col-6">
+                    <div class="d-flex justify-content-center gap-4 flex-wrap">
+                        <a href="#" class="text-decoration-none" style="color: var(--primary); font-weight: 500;">
+                            <i class="bi bi-globe me-1"></i>
+                            View Website
+                        </a>
+                        <a href="#" class="text-decoration-none" style="color: var(--primary); font-weight: 500;">
+                            <i class="bi bi-hospital me-1"></i>
+                            Clinic Section
+                        </a>
+                        <a href="#" class="text-decoration-none" style="color: var(--primary); font-weight: 500;">
+                            <i class="bi bi-headset me-1"></i>
+                            Contact Support
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Main JavaScript -->
+    <script src="./assets/js/main.js"></script>
+
+    <!-- POS Specific JavaScript with Dummy Data -->
+    <script>
+        // Dummy product data
+        const products = [
+            { id: 1, name: 'Paracetamol 500mg', category: 'Pain Relief', stock: 150, price: 5000 },
+            { id: 2, name: 'Amoxicillin 250mg', category: 'Antibiotics', stock: 120, price: 12000 },
+            { id: 3, name: 'Vitamin C Tablets', category: 'Supplements', stock: 200, price: 8000 },
+            { id: 4, name: 'Ibuprofen 400mg', category: 'Pain Relief', stock: 90, price: 6000 },
+            { id: 5, name: 'Aspirin 75mg', category: 'Cardiovascular', stock: 180, price: 4500 },
+            { id: 6, name: 'Metformin 500mg', category: 'Diabetes', stock: 110, price: 15000 },
+            { id: 7, name: 'Omeprazole 20mg', category: 'Digestive', stock: 95, price: 9000 },
+            { id: 8, name: 'Cetirizine 10mg', category: 'Allergy', stock: 140, price: 7000 },
+        ];
+
+        let cart = [];
+
+        // Render products
+        function renderProducts(productsToRender = products) {
+            const grid = document.getElementById('productGrid');
+            grid.innerHTML = '';
+
+            productsToRender.forEach(product => {
+                const productCard = `
+            <div class="col-md-6 col-lg-4">
+                <div class="glass-card product-card" onclick="addToCart(${product.id})">
+                    <div class="d-flex align-items-start gap-3">
+                        <div class="product-icon"><i class="bi bi-capsule"></i></div>
+                        <div class="flex-grow-1">
+                            <p class="mb-1" style="font-weight: 600;">${product.name}</p>
+                            <small class="text-muted d-block">Stock: ${product.stock} units</small>
+                            <small class="text-muted d-block">Category: ${product.category}</small>
+                            <p class="mb-0 mt-2" style="color: var(--primary); font-weight: 600;">UGX ${product.price.toLocaleString()}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+                grid.innerHTML += productCard;
+            });
+        }
+
+        // Search products
+        function searchProducts(query) {
+            const filtered = products.filter(p =>
+                p.name.toLowerCase().includes(query.toLowerCase()) ||
+                p.category.toLowerCase().includes(query.toLowerCase())
+            );
+            renderProducts(filtered);
+        }
+
+        // Add to cart
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+
+            const existingItem = cart.find(item => item.id === productId);
+            if (existingItem) {
+                if (existingItem.quantity < product.stock) {
+                    existingItem.quantity++;
+                } else {
+                    alert('Not enough stock available');
+                    return;
+                }
+            } else {
+                cart.push({ ...product, quantity: 1 });
+            }
+
+            updateCart();
+        }
+
+        // Remove from cart
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            updateCart();
+        }
+
+        // Update quantity
+        function updateQuantity(productId, newQuantity) {
+            const item = cart.find(item => item.id === productId);
+            if (!item) return;
+
+            const product = products.find(p => p.id === productId);
+            if (newQuantity > product.stock) {
+                alert('Not enough stock available');
+                return;
+            }
+
+            if (newQuantity <= 0) {
+                removeFromCart(productId);
+            } else {
+                item.quantity = newQuantity;
+                updateCart();
+            }
+        }
+
+        // Update cart display
+        function updateCart() {
+            const cartItems = document.getElementById('cartItems');
+            const subtotalEl = document.getElementById('subtotalAmount');
+            const discountEl = document.getElementById('discountAmount');
+            const totalEl = document.getElementById('totalAmount');
+            const discountPercent = parseFloat(document.getElementById('discountInput').value) || 0;
+
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<p class="text-muted text-center">Cart is empty</p>';
+                subtotalEl.textContent = 'UGX 0';
+                discountEl.textContent = 'UGX 0';
+                totalEl.textContent = 'UGX 0';
+                return;
+            }
+
+            let subtotal = 0;
+            cartItems.innerHTML = '';
+
+            cart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                subtotal += itemTotal;
+
+                cartItems.innerHTML += `
+            <div class="cart-item mb-3 p-3" style="background: var(--glass-bg); border-radius: 12px; border: 1px solid var(--border-color);">
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                    <div class="flex-grow-1">
+                        <p class="mb-1" style="font-weight: 600;">${item.name}</p>
+                        <small class="text-muted">UGX ${item.price.toLocaleString()} × ${item.quantity}</small>
+                    </div>
+                    <button class="btn btn-sm btn-link text-danger p-0" onclick="removeFromCart(${item.id})">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="input-group" style="width: 120px;">
+                        <button class="btn btn-sm btn-outline-secondary" onclick="updateQuantity(${item.id}, ${item.quantity - 1})">-</button>
+                        <input type="number" class="form-control form-control-sm text-center" value="${item.quantity}" 
+                            onchange="updateQuantity(${item.id}, parseInt(this.value))" min="1" max="${item.stock}">
+                        <button class="btn btn-sm btn-outline-secondary" onclick="updateQuantity(${item.id}, ${item.quantity + 1})">+</button>
+                    </div>
+                    <strong style="color: var(--primary);">UGX ${itemTotal.toLocaleString()}</strong>
+                </div>
+            </div>
+        `;
+            });
+
+            const discountAmount = subtotal * (discountPercent / 100);
+            const total = subtotal - discountAmount;
+
+            subtotalEl.textContent = `UGX ${subtotal.toLocaleString()}`;
+            discountEl.textContent = `UGX ${discountAmount.toLocaleString()}`;
+            totalEl.textContent = `UGX ${total.toLocaleString()}`;
+        }
+
+        // Clear cart
+        function clearCart() {
+            if (cart.length === 0) return;
+            if (confirm('Are you sure you want to clear the cart?')) {
+                cart = [];
+                updateCart();
+            }
+        }
+
+        // Checkout
+        function checkout() {
+            if (cart.length === 0) {
+                alert('Cart is empty');
+                return;
+            }
+
+            const total = document.getElementById('totalAmount').textContent;
+            const paymentMethod = document.getElementById('paymentMethod').value;
+
+            if (confirm(`Complete sale of ${total} via ${paymentMethod}?`)) {
+                alert('Sale completed successfully!');
+                cart = [];
+                updateCart();
+                document.getElementById('discountInput').value = '0';
+            }
+        }
+
+        // Initialize
+        renderProducts();
+    </script>
+
+</body>
+
+</html>
